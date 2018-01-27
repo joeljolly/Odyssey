@@ -42,14 +42,14 @@ public class TasksActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+       /* FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        }); */
 
         //////
 
@@ -59,6 +59,11 @@ public class TasksActivity extends AppCompatActivity {
         String JsonURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+Lat+","+Lng+"&radius=500&type=museums&key=AIzaSyByF7l6SrHHP3mSPVkxxuxRrAyKdm4TB5Q";
         Log.d("URL",JsonURL);
 
+        int i=Integer.parseInt("R.id.card1");
+        TextView v=(TextView) findViewById(i);
+        v.setText("lol");
+
+
     }
 
     public void getGallery(String Url) {
@@ -66,7 +71,7 @@ public class TasksActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
 
         // Casts results into the TextView found within the main layout XML with id jsonData
-        results = (TextView) findViewById(R.id.jsonData);
+        //results = (TextView) findViewById(R.id.jsonData);
 
         // Creating the JsonObjectRequest class called obreq, passing required parameters:
         //GET is used to fetch data from the server, JsonURL is the URL to be fetched from.
@@ -127,7 +132,7 @@ public class TasksActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
 
         // Casts results into the TextView found within the main layout XML with id jsonData
-        results = (TextView) findViewById(R.id.jsonData);
+       // results = (TextView) findViewById(R.id.jsonData);
 
         // Creating the JsonObjectRequest class called obreq, passing required parameters:
         //GET is used to fetch data from the server, JsonURL is the URL to be fetched from.
@@ -188,7 +193,7 @@ public class TasksActivity extends AppCompatActivity {
         requestQueue = Volley.newRequestQueue(this);
 
         // Casts results into the TextView found within the main layout XML with id jsonData
-        results = (TextView) findViewById(R.id.jsonData);
+       // results = (TextView) findViewById(R.id.jsonData);
 
         // Creating the JsonObjectRequest class called obreq, passing required parameters:
         //GET is used to fetch data from the server, JsonURL is the URL to be fetched from.
@@ -244,12 +249,13 @@ public class TasksActivity extends AppCompatActivity {
         requestQueue.add(obreq);
     }
 
+
     public void getZoo(String Url) {
         // Creates the Volley request queue
         requestQueue = Volley.newRequestQueue(this);
 
         // Casts results into the TextView found within the main layout XML with id jsonData
-        results = (TextView) findViewById(R.id.jsonData);
+        //results = (TextView) findViewById(R.id.jsonData);
 
         // Creating the JsonObjectRequest class called obreq, passing required parameters:
         //GET is used to fetch data from the server, JsonURL is the URL to be fetched from.
@@ -303,6 +309,11 @@ public class TasksActivity extends AppCompatActivity {
         );
         // Adds the JSON object request "obreq" to the request queue
         requestQueue.add(obreq);
+    }
+
+    public void showContent()
+    {
+
     }
 }
 
