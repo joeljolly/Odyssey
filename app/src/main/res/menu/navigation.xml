@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+
     <item
-        android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="Tasks" />
+        android:id="@+id/navigation_notifications2"
+        android:icon="@drawable/pro"
+        android:title="Profile" />
 
     <item
         android:id="@+id/navigation_dashboard"
@@ -12,8 +13,8 @@
         android:title="Rewards" />
 
     <item
-        android:id="@+id/navigation_notifications2"
-        android:icon="@drawable/pro"
-        android:title="Profile" />
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="Tasks" />
 
 </menu>
