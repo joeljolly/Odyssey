@@ -20,6 +20,7 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.places.GeoDataClient;
@@ -73,10 +74,10 @@ public class HomeActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    user_tasks();
                     G1.setVisibility(View.VISIBLE);
                     G2.setVisibility(View.GONE);
                     G4.setVisibility(View.GONE);
+                    user_tasks();
                     return true;
                 case R.id.navigation_dashboard:
                     G1.setVisibility(View.GONE);
@@ -104,7 +105,6 @@ public class HomeActivity extends AppCompatActivity {
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
         G1=(GridLayout) findViewById(R.id.layout1);
         G2=(GridLayout) findViewById(R.id.layout2);
         G4=(RelativeLayout) findViewById(R.id.layout4);
@@ -156,7 +156,6 @@ public class HomeActivity extends AppCompatActivity {
 
         // Construct a FusedLocationProviderClient.
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        user_tasks();
     }
     public Boolean mLocationPermissionGranted;
     private void getLocationPermission() {
@@ -199,7 +198,9 @@ public class HomeActivity extends AppCompatActivity {
         //myList = myLocation.getFromLocation(latPoint,lngPoint,1);
         try {
             getLocationPermission();
+            Toast.makeText(HomeActivity.this,"IIII",Toast.LENGTH_LONG).show();
             if (mLocationPermissionGranted) {
+                Toast.makeText(HomeActivity.this,"IIII2",Toast.LENGTH_LONG).show();
                 Task locationResult = mFusedLocationProviderClient.getLastLocation();
                 locationResult.addOnCompleteListener(this, new OnCompleteListener() {
                     @Override
@@ -214,12 +215,13 @@ public class HomeActivity extends AppCompatActivity {
                                 Address address = (Address) myList.get(0);
                                 // sending back first address line and locality
                                 //t1.setText(address.getLocality());
+                                Toast.makeText(HomeActivity.this,"IIII",Toast.LENGTH_LONG).show();
                                 Intent intent1=new Intent(HomeActivity.this,MapsActivity.class);
                                 intent1.putExtra("Slat",mLastKnownLocation.getLatitude());
                                 intent1.putExtra("Slng",mLastKnownLocation.getLongitude());
                                 intent1.putExtra("Dlat",8.7707);
                                 intent1.putExtra("Dlng",76.8836);
-                                //startActivity(intent1);
+                                startActivity(intent1);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
