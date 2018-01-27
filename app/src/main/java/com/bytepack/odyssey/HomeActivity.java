@@ -55,7 +55,7 @@ public class HomeActivity extends AppCompatActivity {
     FusedLocationProviderClient mFusedLocationProviderClient;
     PlaceDetectionClient p1;
     LatLng L;
-    GridLayout G1,G2,G3,G4;
+    GridLayout G1,G2,G3;
     RelativeLayout G4;
     private String mUsername;
     private FirebaseAuth mFirebaseAuth;
@@ -76,28 +76,18 @@ public class HomeActivity extends AppCompatActivity {
                     user_tasks();
                     G1.setVisibility(View.VISIBLE);
                     G2.setVisibility(View.GONE);
-                    G3.setVisibility(View.GONE);
                     G4.setVisibility(View.GONE);
                     return true;
                 case R.id.navigation_dashboard:
                     G1.setVisibility(View.GONE);
                     G2.setVisibility(View.VISIBLE);
-                    G3.setVisibility(View.GONE);
-                    G4.setVisibility(View.GONE);
-                    return true;
-                case R.id.navigation_notifications1:
-                    G1.setVisibility(View.GONE);
-                    G2.setVisibility(View.GONE);
-                    G3.setVisibility(View.VISIBLE);
                     G4.setVisibility(View.GONE);
                     return true;
                 case R.id.navigation_notifications2:
                     user_profile();
                     G1.setVisibility(View.GONE);
                     G2.setVisibility(View.GONE);
-                    G3.setVisibility(View.GONE);
                     G4.setVisibility(View.VISIBLE);
-                    user_profile();
                     display_profile();
                     return true;
             }
@@ -117,7 +107,6 @@ public class HomeActivity extends AppCompatActivity {
 
         G1=(GridLayout) findViewById(R.id.layout1);
         G2=(GridLayout) findViewById(R.id.layout2);
-        G3=(GridLayout) findViewById(R.id.layout3);
         G4=(RelativeLayout) findViewById(R.id.layout4);
 
     }
@@ -158,7 +147,7 @@ public class HomeActivity extends AppCompatActivity {
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(imgProfilePic);
         }
-        G4=(GridLayout) findViewById(R.id.layout4);
+        G4=(RelativeLayout) findViewById(R.id.layout4);
         // Construct a GeoDataClient.
         g1 = Places.getGeoDataClient(this, null);
 
@@ -205,7 +194,7 @@ public class HomeActivity extends AppCompatActivity {
     List myList;
     public void user_tasks()
     {
-        final TextView t1=(TextView) findViewById(R.id.textView1);
+        //final TextView t1=(TextView) findViewById(R.id.textView1);
         myLocation = new Geocoder(this,Locale.getDefault());
         //myList = myLocation.getFromLocation(latPoint,lngPoint,1);
         try {
@@ -224,7 +213,7 @@ public class HomeActivity extends AppCompatActivity {
                                 myList = myLocation.getFromLocation(mLastKnownLocation.getLatitude(),mLastKnownLocation.getLongitude(),1);
                                 Address address = (Address) myList.get(0);
                                 // sending back first address line and locality
-                                t1.setText(address.getLocality());
+                                //t1.setText(address.getLocality());
                                 Intent intent1=new Intent(HomeActivity.this,MapsActivity.class);
                                 intent1.putExtra("Slat",mLastKnownLocation.getLatitude());
                                 intent1.putExtra("Slng",mLastKnownLocation.getLongitude());
