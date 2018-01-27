@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
         System.loadLibrary("native-lib");
     }
 
+    private String mUsername;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
 
@@ -26,9 +27,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         System.out.println("One");
-        /*// Example of a call to a native method
-        TextView tv = (TextView) findViewById(R.id.sample_text);
-        tv.setText(stringFromJNI());*/
+
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
@@ -38,10 +37,10 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this," Not Welcome",Toast.LENGTH_LONG).show();
             return;
         } else {
-            //Intent intent = new Intent(MainActivity.this, login.class);
-            //startActivity(intent);
             Toast.makeText(MainActivity.this,"Welcome",Toast.LENGTH_LONG).show();
-            /*mUsername = mFirebaseUser.getDisplayName();
+            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+            startActivity(intent);
+            /*
             if (mFirebaseUser.getPhotoUrl() != null) {
                 //mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();
             }*/
