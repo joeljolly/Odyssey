@@ -31,9 +31,13 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
         if (mFirebaseUser == null) {
-            Toast.makeText(MainActivity.this,"Welcome",Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(MainActivity.this, login.class);
+            startActivity(intent);
+            //Toast.makeText(MainActivity.this,"Welcome",Toast.LENGTH_LONG).show();
             return;
         } else {
+            //Intent intent = new Intent(MainActivity.this, login.class);
+            //startActivity(intent);
             Toast.makeText(MainActivity.this,"Not Welcome",Toast.LENGTH_LONG).show();
             /*mUsername = mFirebaseUser.getDisplayName();
             if (mFirebaseUser.getPhotoUrl() != null) {
