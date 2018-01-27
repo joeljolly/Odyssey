@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "800440249825",
+    "firebase_url": "https://odyssey-3c81e.firebaseio.com",
+    "project_id": "odyssey-3c81e",
+    "storage_bucket": "odyssey-3c81e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:800440249825:android:56cde62e1622618b",
+        "android_client_info": {
+          "package_name": "com.bytepack.odyssey"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "800440249825-jnvuh6o5on8phm3a8t8i4qrtm1brb9kt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bytepack.odyssey",
+            "certificate_hash": "3d845f7c9b8761f6e8e4c4a460ab5ff20f02edc4"
+          }
+        },
+        {
+          "client_id": "800440249825-ubost8lpg6n90lj5qvoi2bu40n3p8a4i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIHG3gnQQUM2q2pXKOOn4RWlHwp6VZBlA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "800440249825-ubost8lpg6n90lj5qvoi2bu40n3p8a4i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
