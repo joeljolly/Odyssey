@@ -33,12 +33,12 @@ public class MainActivity extends AppCompatActivity {
         if (mFirebaseUser == null) {
             Intent intent = new Intent(MainActivity.this, login.class);
             startActivity(intent);
-            //Toast.makeText(MainActivity.this,"Welcome",Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this," Not Welcome",Toast.LENGTH_LONG).show();
             return;
         } else {
             //Intent intent = new Intent(MainActivity.this, login.class);
             //startActivity(intent);
-            Toast.makeText(MainActivity.this,"Not Welcome",Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this,"Welcome",Toast.LENGTH_LONG).show();
             /*mUsername = mFirebaseUser.getDisplayName();
             if (mFirebaseUser.getPhotoUrl() != null) {
                 //mPhotoUrl = mFirebaseUser.getPhotoUrl().toString();

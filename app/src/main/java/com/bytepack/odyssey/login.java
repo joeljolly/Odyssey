@@ -43,6 +43,7 @@ public class login extends AppCompatActivity {
                 // Successfully signed in
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 Toast.makeText(login.this,"Success",Toast.LENGTH_LONG).show();
+
                 // ...
             } else {
                 // Sign in failed, check response for error code
