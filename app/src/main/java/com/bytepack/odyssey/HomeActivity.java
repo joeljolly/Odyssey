@@ -219,7 +219,7 @@ public class HomeActivity extends AppCompatActivity {
                                 intent1.putExtra("Slng",mLastKnownLocation.getLongitude());
                                 intent1.putExtra("Dlat",8.7707);
                                 intent1.putExtra("Dlng",76.8836);
-                                startActivity(intent1);
+                                //startActivity(intent1);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -234,6 +234,8 @@ public class HomeActivity extends AppCompatActivity {
         } catch(SecurityException e)  {
             Log.e("Exception: %s", e.getMessage());
         }
+
+
 
     }
 
