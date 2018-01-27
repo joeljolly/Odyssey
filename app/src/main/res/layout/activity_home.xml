@@ -7,17 +7,13 @@
     android:layout_height="match_parent"
     tools:context="com.bytepack.odyssey.HomeActivity">
 
+
     <GridLayout
         android:id="@+id/layout1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="gone">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView1" />
     </GridLayout>
 
     <GridLayout
@@ -46,19 +42,85 @@
             android:text="TextView3" />
     </GridLayout>
 
-    <GridLayout
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/layout4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone">
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView4" />
-    </GridLayout>
+        <LinearLayout
 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/img_view"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/img_view"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:orientation="horizontal">
+
+
+
+                    <TextView
+                        android:id="@+id/textviewname"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".3"
+                        android:gravity="center"
+                        />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/textViewMail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                         />
+
+                    <TextView
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="placeholder1" />
+
+                    <TextView
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="placeholder2" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </RelativeLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"

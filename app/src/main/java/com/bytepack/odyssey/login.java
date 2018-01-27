@@ -43,6 +43,7 @@ public class login extends AppCompatActivity {
                 // Successfully signed in
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 Toast.makeText(login.this,"Success",Toast.LENGTH_LONG).show();
+                startActivity(new Intent(login.this,HomeActivity.class));
 
                 // ...
             } else {
