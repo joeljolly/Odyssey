@@ -8,22 +8,33 @@
     tools:context="com.bytepack.odyssey.HomeActivity">
 
 
-    <GridLayout
+    <RelativeLayout
         android:id="@+id/layout1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone">
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/Textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView2" />
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="131dp"
+            android:text="TextView1"
+            android:textSize="35sp"
+            android:visibility="visible" />
 
-
-
-
-    </GridLayout>
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Textview"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="35dp"
+            android:onClick="findtask"
+            android:text="FindTask" />
+    </RelativeLayout>
 
     <GridLayout
         android:id="@+id/layout2"
@@ -44,7 +55,9 @@
         android:id="@+id/layout4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:visibility="visible"
+        tools:layout_editor_absoluteX="40dp"
+        tools:layout_editor_absoluteY="35dp">
 
         <LinearLayout
 

@@ -20,6 +20,7 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.places.GeoDataClient;
@@ -55,8 +56,8 @@ public class HomeActivity extends AppCompatActivity {
     FusedLocationProviderClient mFusedLocationProviderClient;
     PlaceDetectionClient p1;
     LatLng L;
-    GridLayout G1,G2,G3;
-    RelativeLayout G4;
+    GridLayout G2;
+    RelativeLayout G4,G1;
     private String mUsername;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
@@ -85,10 +86,11 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_notifications2:
                     user_profile();
+                    display_profile();
                     G1.setVisibility(View.GONE);
                     G2.setVisibility(View.GONE);
                     G4.setVisibility(View.VISIBLE);
-                    display_profile();
+
                     return true;
             }
             return false;
@@ -105,9 +107,12 @@ public class HomeActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        G1=(GridLayout) findViewById(R.id.layout1);
+        G1=(RelativeLayout) findViewById(R.id.layout1);
         G2=(GridLayout) findViewById(R.id.layout2);
         G4=(RelativeLayout) findViewById(R.id.layout4);
+
+        user_profile();
+        display_profile();
 
     }
 
@@ -158,17 +163,19 @@ public class HomeActivity extends AppCompatActivity {
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
     }
-    public Boolean mLocationPermissionGranted;
+    public Boolean mLocationPermissionGranted=true;
     private void getLocationPermission() {
     /*
      * Request location permission, so that we can get the location of the
      * device. The result of the permission request is handled by a callback,
      * onRequestPermissionsResult.
      */
+        Log.d("inside","gLp");
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             mLocationPermissionGranted = true;
+            getCurrentLocation();
         } else {
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},1);
@@ -184,7 +191,9 @@ public class HomeActivity extends AppCompatActivity {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d("exit","gcl");
                     mLocationPermissionGranted = true;
+
                 }
             }
         }
@@ -193,50 +202,69 @@ public class HomeActivity extends AppCompatActivity {
     Geocoder myLocation;
     Location mLastKnownLocation;
     List myList;
-    public void user_tasks()
+    public void getCurrentLocation()
+
     {
         //final TextView t1=(TextView) findViewById(R.id.textView1);
-        myLocation = new Geocoder(this,Locale.getDefault());
+        Log.d("inside","gcl");
         //myList = myLocation.getFromLocation(latPoint,lngPoint,1);
         try {
-            getLocationPermission();
+
             if (mLocationPermissionGranted) {
                 Task locationResult = mFusedLocationProviderClient.getLastLocation();
+                myLocation = new Geocoder(this,Locale.getDefault());
+                Log.d("Test","11");
                 locationResult.addOnCompleteListener(this, new OnCompleteListener() {
                     @Override
                     public void onComplete(@NonNull Task task) {
+
                         if (task.isSuccessful()) {
                             // Set the map's camera position to the current location of the device.
+                            Log.d("Test","222");
                             mLastKnownLocation =(Location) task.getResult();
-                            L=new LatLng(mLastKnownLocation.getLatitude(),mLastKnownLocation.getLongitude());
 
+                            L=new LatLng(mLastKnownLocation.getLatitude(),mLastKnownLocation.getLongitude());
+                            Toast.makeText(HomeActivity.this,L.latitude+" "+L.longitude,Toast.LENGTH_LONG).show();
                             try {
+
                                 myList = myLocation.getFromLocation(mLastKnownLocation.getLatitude(),mLastKnownLocation.getLongitude(),1);
+                                TextView t1=(TextView)findViewById(R.id.Textview);
                                 Address address = (Address) myList.get(0);
                                 // sending back first address line and locality
-                                //t1.setText(address.getLocality());
-                                Intent intent1=new Intent(HomeActivity.this,MapsActivity.class);
-                                intent1.putExtra("Slat",mLastKnownLocation.getLatitude());
-                                intent1.putExtra("Slng",mLastKnownLocation.getLongitude());
-                                intent1.putExtra("Dlat",8.7707);
-                                intent1.putExtra("Dlng",76.8836);
-                                //startActivity(intent1);
+                                t1.setText(address.getLocality());
+
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
 
+
                         } else {
-                          //  Log.d(TAG, "Current location is null. Using defaults.");
+                            //  Log.d(TAG, "Current location is null. Using defaults.");
                             //Log.e(TAG, "Exception: %s", task.getException());
                         }
                     }
+
                 });
             }
         } catch(SecurityException e)  {
             Log.e("Exception: %s", e.getMessage());
         }
     }
+    public void findtask(View v)
+    {
+        Intent intent1=new Intent(HomeActivity.this,MapsActivity.class);
+        intent1.putExtra("Slat",mLastKnownLocation.getLatitude());
+        intent1.putExtra("Slng",mLastKnownLocation.getLongitude());
+        intent1.putExtra("Dlat",8.7707);
+        intent1.putExtra("Dlng",76.8836);
+        //startActivity(intent1);
+        Toast.makeText(this,"intended",Toast.LENGTH_LONG).show();
+    }
 
-
+    public void user_tasks()
+    {
+        Log.d("inside","u_t");
+        getLocationPermission();
+    }
 
 }
