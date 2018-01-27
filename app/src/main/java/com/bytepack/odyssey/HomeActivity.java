@@ -252,13 +252,13 @@ public class HomeActivity extends AppCompatActivity {
     }
     public void findtask(View v)
     {
-        Intent intent1=new Intent(HomeActivity.this,MapsActivity.class);
+        Intent intent1=new Intent(HomeActivity.this,TasksActivity.class);
         intent1.putExtra("Slat",mLastKnownLocation.getLatitude());
         intent1.putExtra("Slng",mLastKnownLocation.getLongitude());
         intent1.putExtra("Dlat",8.7707);
         intent1.putExtra("Dlng",76.8836);
-        //startActivity(intent1);
-        Toast.makeText(this,"intended",Toast.LENGTH_LONG).show();
+        startActivity(intent1);
+        //Toast.makeText(this,"intended",Toast.LENGTH_LONG).show();
     }
 
     public void user_tasks()

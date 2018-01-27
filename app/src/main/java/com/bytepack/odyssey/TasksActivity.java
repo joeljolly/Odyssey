@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -54,7 +55,13 @@ public class TasksActivity extends AppCompatActivity {
 
         Lat=8.5241;
         Lng=76.9366;
-        String JsonURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+Lat+","+Lng+"&radius=500&type=museums&key="+R.string.Places_Web_Key;
+
+        String JsonURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+Lat+","+Lng+"&radius=500&type=museums&key=AIzaSyByF7l6SrHHP3mSPVkxxuxRrAyKdm4TB5Q";
+        Log.d("URL",JsonURL);
+
+    }
+
+    public void getGallery(String Url) {
         // Creates the Volley request queue
         requestQueue = Volley.newRequestQueue(this);
 
@@ -63,7 +70,7 @@ public class TasksActivity extends AppCompatActivity {
 
         // Creating the JsonObjectRequest class called obreq, passing required parameters:
         //GET is used to fetch data from the server, JsonURL is the URL to be fetched from.
-        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET, JsonURL,
+        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET, Url,
                 // The third parameter Listener overrides the method onResponse() and passes
                 //JSONObject as a parameter
                 new Response.Listener<JSONObject>() {
@@ -74,9 +81,9 @@ public class TasksActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            //Toast.makeText(MainActivity.this,"***",Toast.LENGTH_LONG).show();
+
                             JSONArray obj = response.getJSONArray("results");
-                            JSONObject b=obj.getJSONObject(0);
+                            //JSONObject b=obj.getJSONObject(0);
 
                             // Retrieves the string labeled "colorName" and "description" from
                             //the response JSON Object
@@ -86,15 +93,199 @@ public class TasksActivity extends AppCompatActivity {
 
                             // Adds strings from object to the "data" string
 
-                            data = b.getString("name");
-
+                            data = obj.getString(0);
+                            Toast.makeText(TasksActivity.this,"***",Toast.LENGTH_LONG).show();
                             // Adds the data string to the TextView "results"
                             results.setText(data);
+
                         }
                         // Try and catch are included to handle any errors due to JSON
                         catch (Exception e) {
                             // If an error occurs, this prints the error to the log
-                            //Toast.makeText(MainActivity.this,"+++",Toast.LENGTH_LONG).show();
+                            Toast.makeText(TasksActivity.this,"+++",Toast.LENGTH_LONG).show();
+                            results.setText(e.getMessage());
+                        }
+                    }
+                },
+                // The final parameter overrides the method onErrorResponse() and passes VolleyError
+                //as a parameter
+                new Response.ErrorListener() {
+                    @Override
+                    // Handles errors that occur due to Volley
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley", "Error");
+                        Log.d("check",error.getMessage());
+                    }
+                }
+        );
+        // Adds the JSON object request "obreq" to the request queue
+        requestQueue.add(obreq);
+    }
+
+    public void getMuseum(String Url) {
+        // Creates the Volley request queue
+        requestQueue = Volley.newRequestQueue(this);
+
+        // Casts results into the TextView found within the main layout XML with id jsonData
+        results = (TextView) findViewById(R.id.jsonData);
+
+        // Creating the JsonObjectRequest class called obreq, passing required parameters:
+        //GET is used to fetch data from the server, JsonURL is the URL to be fetched from.
+        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET, Url,
+                // The third parameter Listener overrides the method onResponse() and passes
+                //JSONObject as a parameter
+                new Response.Listener<JSONObject>() {
+
+
+
+                    // Takes the response from the JSON request
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+
+                            JSONArray obj = response.getJSONArray("results");
+                            //JSONObject b=obj.getJSONObject(0);
+
+                            // Retrieves the string labeled "colorName" and "description" from
+                            //the response JSON Object
+                            //and converts them into javascript objects
+                            //String color = obj.getString("colorName");
+                            //String desc = obj.getString("description");
+
+                            // Adds strings from object to the "data" string
+
+                            data = obj.getString(0);
+                            Toast.makeText(TasksActivity.this,"***",Toast.LENGTH_LONG).show();
+                            // Adds the data string to the TextView "results"
+                            results.setText(data);
+
+                        }
+                        // Try and catch are included to handle any errors due to JSON
+                        catch (Exception e) {
+                            // If an error occurs, this prints the error to the log
+                            Toast.makeText(TasksActivity.this,"+++",Toast.LENGTH_LONG).show();
+                            results.setText(e.getMessage());
+                        }
+                    }
+                },
+                // The final parameter overrides the method onErrorResponse() and passes VolleyError
+                //as a parameter
+                new Response.ErrorListener() {
+                    @Override
+                    // Handles errors that occur due to Volley
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley", "Error");
+                        Log.d("check",error.getMessage());
+                    }
+                }
+        );
+        // Adds the JSON object request "obreq" to the request queue
+        requestQueue.add(obreq);
+    }
+
+    public void getPark(String Url) {
+        // Creates the Volley request queue
+        requestQueue = Volley.newRequestQueue(this);
+
+        // Casts results into the TextView found within the main layout XML with id jsonData
+        results = (TextView) findViewById(R.id.jsonData);
+
+        // Creating the JsonObjectRequest class called obreq, passing required parameters:
+        //GET is used to fetch data from the server, JsonURL is the URL to be fetched from.
+        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET, Url,
+                // The third parameter Listener overrides the method onResponse() and passes
+                //JSONObject as a parameter
+                new Response.Listener<JSONObject>() {
+
+
+
+                    // Takes the response from the JSON request
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+
+                            JSONArray obj = response.getJSONArray("results");
+                            //JSONObject b=obj.getJSONObject(0);
+
+                            // Retrieves the string labeled "colorName" and "description" from
+                            //the response JSON Object
+                            //and converts them into javascript objects
+                            //String color = obj.getString("colorName");
+                            //String desc = obj.getString("description");
+
+                            // Adds strings from object to the "data" string
+
+                            data = obj.getString(0);
+                            Toast.makeText(TasksActivity.this,"***",Toast.LENGTH_LONG).show();
+                            // Adds the data string to the TextView "results"
+                            results.setText(data);
+
+                        }
+                        // Try and catch are included to handle any errors due to JSON
+                        catch (Exception e) {
+                            // If an error occurs, this prints the error to the log
+                            Toast.makeText(TasksActivity.this,"+++",Toast.LENGTH_LONG).show();
+                            results.setText(e.getMessage());
+                        }
+                    }
+                },
+                // The final parameter overrides the method onErrorResponse() and passes VolleyError
+                //as a parameter
+                new Response.ErrorListener() {
+                    @Override
+                    // Handles errors that occur due to Volley
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley", "Error");
+                        Log.d("check",error.getMessage());
+                    }
+                }
+        );
+        // Adds the JSON object request "obreq" to the request queue
+        requestQueue.add(obreq);
+    }
+
+    public void getZoo(String Url) {
+        // Creates the Volley request queue
+        requestQueue = Volley.newRequestQueue(this);
+
+        // Casts results into the TextView found within the main layout XML with id jsonData
+        results = (TextView) findViewById(R.id.jsonData);
+
+        // Creating the JsonObjectRequest class called obreq, passing required parameters:
+        //GET is used to fetch data from the server, JsonURL is the URL to be fetched from.
+        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET, Url,
+                // The third parameter Listener overrides the method onResponse() and passes
+                //JSONObject as a parameter
+                new Response.Listener<JSONObject>() {
+
+
+
+                    // Takes the response from the JSON request
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+
+                            JSONArray obj = response.getJSONArray("results");
+                            //JSONObject b=obj.getJSONObject(0);
+
+                            // Retrieves the string labeled "colorName" and "description" from
+                            //the response JSON Object
+                            //and converts them into javascript objects
+                            //String color = obj.getString("colorName");
+                            //String desc = obj.getString("description");
+
+                            // Adds strings from object to the "data" string
+
+                            data = obj.getString(0);
+                            Toast.makeText(TasksActivity.this,"***",Toast.LENGTH_LONG).show();
+                            // Adds the data string to the TextView "results"
+                            results.setText(data);
+
+                        }
+                        // Try and catch are included to handle any errors due to JSON
+                        catch (Exception e) {
+                            // If an error occurs, this prints the error to the log
+                            Toast.makeText(TasksActivity.this,"+++",Toast.LENGTH_LONG).show();
                             results.setText(e.getMessage());
                         }
                     }
