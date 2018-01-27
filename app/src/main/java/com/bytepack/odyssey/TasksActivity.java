@@ -35,6 +35,17 @@ public class TasksActivity extends AppCompatActivity {
     RequestQueue requestQueue;
     double Lat,Lng;
 
+    String Gallery="";
+    String Museum="";
+    String Park="";
+    String Zoo="";
+
+    JSONObject Itemset=new JSONObject();
+    JSONObject Loc=new JSONObject();
+    JSONObject Loct=new JSONObject();
+    String Item;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,12 +67,28 @@ public class TasksActivity extends AppCompatActivity {
         Lat=8.5241;
         Lng=76.9366;
 
-        String JsonURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+Lat+","+Lng+"&radius=500&type=museums&key=AIzaSyByF7l6SrHHP3mSPVkxxuxRrAyKdm4TB5Q";
-        Log.d("URL",JsonURL);
+        String JsonURLGallery = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+Lat+","+Lng+"&radius=5000&type=art_gallery&key=AIzaSyByF7l6SrHHP3mSPVkxxuxRrAyKdm4TB5Q";
+        Log.d("URL",JsonURLGallery);
+        String JsonURLMuseum = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+Lat+","+Lng+"&radius=5000&type=museum&key=AIzaSyByF7l6SrHHP3mSPVkxxuxRrAyKdm4TB5Q";
+        Log.d("URL",JsonURLMuseum);
+        String JsonURLPark = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+Lat+","+Lng+"&radius=5000&type=park&key=AIzaSyByF7l6SrHHP3mSPVkxxuxRrAyKdm4TB5Q";
+        Log.d("URL",JsonURLPark);
+        String JsonURLZoo = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+Lat+","+Lng+"&radius=5000&type=zoo&key=AIzaSyByF7l6SrHHP3mSPVkxxuxRrAyKdm4TB5Q";
+        Log.d("URL",JsonURLZoo);
+
+
+
+
+        //showGallery(JsonURLGallery);
+        //showMuseum(JsonURLMuseum);
+        //showPark(JsonURLPark);
+        //showZoo(JsonURLZoo);
+
 
     }
 
-    public void getGallery(String Url) {
+    public void showGallery(String JsonURL) {
+
         // Creates the Volley request queue
         requestQueue = Volley.newRequestQueue(this);
 
@@ -70,7 +97,7 @@ public class TasksActivity extends AppCompatActivity {
 
         // Creating the JsonObjectRequest class called obreq, passing required parameters:
         //GET is used to fetch data from the server, JsonURL is the URL to be fetched from.
-        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET, Url,
+        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET, JsonURL,
                 // The third parameter Listener overrides the method onResponse() and passes
                 //JSONObject as a parameter
                 new Response.Listener<JSONObject>() {
@@ -82,7 +109,22 @@ public class TasksActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
 
-                            JSONArray obj = response.getJSONArray("results");
+                            JSONArray records = response.getJSONArray("results");
+                            //Toast.makeText(TasksActivity.this,records.toString(),Toast.LENGTH_LONG).show();
+                            String str="";
+                            for(int i=0;i<records.length();++i)
+                            {
+                                Itemset=records.getJSONObject(i);
+                                //Toast.makeText(TasksActivity.this,Itemset.toString(),Toast.LENGTH_SHORT).show();
+                                Loc=Itemset.getJSONObject("geometry");
+                                Loct=Loc.getJSONObject("location");
+                                //str=str+Itemset.getString("name")+": "+Loct.getString("lat")+"//"+Loct.getString("lng")+"\n";
+
+                                Item=Itemset.getString("name")+","+Loct.getDouble("lat")+","+Loct.getDouble("lng");
+                                Gallery=Gallery+Item+"\n";
+                            }
+                            results.setText(Gallery);
+                            //results.setText(str);
                             //JSONObject b=obj.getJSONObject(0);
 
                             // Retrieves the string labeled "colorName" and "description" from
@@ -93,17 +135,17 @@ public class TasksActivity extends AppCompatActivity {
 
                             // Adds strings from object to the "data" string
 
-                            data = obj.getString(0);
-                            Toast.makeText(TasksActivity.this,"***",Toast.LENGTH_LONG).show();
+                            //data = obj.getString(0);
+                            //Toast.makeText(TasksActivity.this,"***",Toast.LENGTH_LONG).show();
                             // Adds the data string to the TextView "results"
-                            results.setText(data);
+                            //results.setText(data);
 
                         }
                         // Try and catch are included to handle any errors due to JSON
                         catch (Exception e) {
                             // If an error occurs, this prints the error to the log
-                            Toast.makeText(TasksActivity.this,"+++",Toast.LENGTH_LONG).show();
-                            results.setText(e.getMessage());
+                            //Toast.makeText(TasksActivity.this,"+++",Toast.LENGTH_LONG).show();
+                            //results.setText(e.getMessage());
                         }
                     }
                 },
@@ -122,7 +164,10 @@ public class TasksActivity extends AppCompatActivity {
         requestQueue.add(obreq);
     }
 
-    public void getMuseum(String Url) {
+
+
+    public void showMuseum(String JsonURL) {
+
         // Creates the Volley request queue
         requestQueue = Volley.newRequestQueue(this);
 
@@ -131,7 +176,7 @@ public class TasksActivity extends AppCompatActivity {
 
         // Creating the JsonObjectRequest class called obreq, passing required parameters:
         //GET is used to fetch data from the server, JsonURL is the URL to be fetched from.
-        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET, Url,
+        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET, JsonURL,
                 // The third parameter Listener overrides the method onResponse() and passes
                 //JSONObject as a parameter
                 new Response.Listener<JSONObject>() {
@@ -143,7 +188,22 @@ public class TasksActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
 
-                            JSONArray obj = response.getJSONArray("results");
+                            JSONArray records = response.getJSONArray("results");
+                            //Toast.makeText(TasksActivity.this,records.toString(),Toast.LENGTH_LONG).show();
+                            String str="";
+                            for(int i=0;i<records.length();++i)
+                            {
+                                Itemset=records.getJSONObject(i);
+                                //Toast.makeText(TasksActivity.this,Itemset.toString(),Toast.LENGTH_SHORT).show();
+                                Loc=Itemset.getJSONObject("geometry");
+                                Loct=Loc.getJSONObject("location");
+                                //str=str+Itemset.getString("name")+": "+Loct.getString("lat")+"//"+Loct.getString("lng")+"\n";
+
+                                Item=Itemset.getString("name")+","+Loct.getDouble("lat")+","+Loct.getDouble("lng");
+                                Museum=Museum+Item+"\n";
+                            }
+                            results.setText(Museum);
+                            //results.setText(str);
                             //JSONObject b=obj.getJSONObject(0);
 
                             // Retrieves the string labeled "colorName" and "description" from
@@ -154,17 +214,17 @@ public class TasksActivity extends AppCompatActivity {
 
                             // Adds strings from object to the "data" string
 
-                            data = obj.getString(0);
-                            Toast.makeText(TasksActivity.this,"***",Toast.LENGTH_LONG).show();
+                            //data = obj.getString(0);
+                            //Toast.makeText(TasksActivity.this,"***",Toast.LENGTH_LONG).show();
                             // Adds the data string to the TextView "results"
-                            results.setText(data);
+                            //results.setText(data);
 
                         }
                         // Try and catch are included to handle any errors due to JSON
                         catch (Exception e) {
                             // If an error occurs, this prints the error to the log
-                            Toast.makeText(TasksActivity.this,"+++",Toast.LENGTH_LONG).show();
-                            results.setText(e.getMessage());
+                            //Toast.makeText(TasksActivity.this,"+++",Toast.LENGTH_LONG).show();
+                            //results.setText(e.getMessage());
                         }
                     }
                 },
@@ -183,7 +243,8 @@ public class TasksActivity extends AppCompatActivity {
         requestQueue.add(obreq);
     }
 
-    public void getPark(String Url) {
+    public void showPark(String JsonURL) {
+
         // Creates the Volley request queue
         requestQueue = Volley.newRequestQueue(this);
 
@@ -192,7 +253,7 @@ public class TasksActivity extends AppCompatActivity {
 
         // Creating the JsonObjectRequest class called obreq, passing required parameters:
         //GET is used to fetch data from the server, JsonURL is the URL to be fetched from.
-        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET, Url,
+        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET, JsonURL,
                 // The third parameter Listener overrides the method onResponse() and passes
                 //JSONObject as a parameter
                 new Response.Listener<JSONObject>() {
@@ -204,7 +265,22 @@ public class TasksActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
 
-                            JSONArray obj = response.getJSONArray("results");
+                            JSONArray records = response.getJSONArray("results");
+                            //Toast.makeText(TasksActivity.this,records.toString(),Toast.LENGTH_LONG).show();
+                            String str="";
+                            for(int i=0;i<records.length();++i)
+                            {
+                                Itemset=records.getJSONObject(i);
+                                //Toast.makeText(TasksActivity.this,Itemset.toString(),Toast.LENGTH_SHORT).show();
+                                Loc=Itemset.getJSONObject("geometry");
+                                Loct=Loc.getJSONObject("location");
+                                //str=str+Itemset.getString("name")+": "+Loct.getString("lat")+"//"+Loct.getString("lng")+"\n";
+
+                                Item=Itemset.getString("name")+","+Loct.getDouble("lat")+","+Loct.getDouble("lng");
+                                Park=Park+Item+"\n";
+                            }
+                            results.setText(Park);
+                            //results.setText(str);
                             //JSONObject b=obj.getJSONObject(0);
 
                             // Retrieves the string labeled "colorName" and "description" from
@@ -215,17 +291,17 @@ public class TasksActivity extends AppCompatActivity {
 
                             // Adds strings from object to the "data" string
 
-                            data = obj.getString(0);
-                            Toast.makeText(TasksActivity.this,"***",Toast.LENGTH_LONG).show();
+                            //data = obj.getString(0);
+                            //Toast.makeText(TasksActivity.this,"***",Toast.LENGTH_LONG).show();
                             // Adds the data string to the TextView "results"
-                            results.setText(data);
+                            //results.setText(data);
 
                         }
                         // Try and catch are included to handle any errors due to JSON
                         catch (Exception e) {
                             // If an error occurs, this prints the error to the log
-                            Toast.makeText(TasksActivity.this,"+++",Toast.LENGTH_LONG).show();
-                            results.setText(e.getMessage());
+                            //Toast.makeText(TasksActivity.this,"+++",Toast.LENGTH_LONG).show();
+                            //results.setText(e.getMessage());
                         }
                     }
                 },
@@ -244,7 +320,9 @@ public class TasksActivity extends AppCompatActivity {
         requestQueue.add(obreq);
     }
 
-    public void getZoo(String Url) {
+
+    public void showZoo(String JsonURL) {
+
         // Creates the Volley request queue
         requestQueue = Volley.newRequestQueue(this);
 
@@ -253,7 +331,7 @@ public class TasksActivity extends AppCompatActivity {
 
         // Creating the JsonObjectRequest class called obreq, passing required parameters:
         //GET is used to fetch data from the server, JsonURL is the URL to be fetched from.
-        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET, Url,
+        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET, JsonURL,
                 // The third parameter Listener overrides the method onResponse() and passes
                 //JSONObject as a parameter
                 new Response.Listener<JSONObject>() {
@@ -265,7 +343,22 @@ public class TasksActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
 
-                            JSONArray obj = response.getJSONArray("results");
+                            JSONArray records = response.getJSONArray("results");
+                            //Toast.makeText(TasksActivity.this,records.toString(),Toast.LENGTH_LONG).show();
+                            String str="";
+                            for(int i=0;i<records.length();++i)
+                            {
+                                Itemset=records.getJSONObject(i);
+                                //Toast.makeText(TasksActivity.this,Itemset.toString(),Toast.LENGTH_SHORT).show();
+                                Loc=Itemset.getJSONObject("geometry");
+                                Loct=Loc.getJSONObject("location");
+                                //str=str+Itemset.getString("name")+": "+Loct.getString("lat")+"//"+Loct.getString("lng")+"\n";
+
+                                Item=Itemset.getString("name")+","+Loct.getDouble("lat")+","+Loct.getDouble("lng");
+                                Zoo=Zoo+Item+"\n";
+                            }
+                            results.setText(Zoo);
+                            //results.setText(str);
                             //JSONObject b=obj.getJSONObject(0);
 
                             // Retrieves the string labeled "colorName" and "description" from
@@ -276,17 +369,17 @@ public class TasksActivity extends AppCompatActivity {
 
                             // Adds strings from object to the "data" string
 
-                            data = obj.getString(0);
-                            Toast.makeText(TasksActivity.this,"***",Toast.LENGTH_LONG).show();
+                            //data = obj.getString(0);
+                            //Toast.makeText(TasksActivity.this,"***",Toast.LENGTH_LONG).show();
                             // Adds the data string to the TextView "results"
-                            results.setText(data);
+                            //results.setText(data);
 
                         }
                         // Try and catch are included to handle any errors due to JSON
                         catch (Exception e) {
                             // If an error occurs, this prints the error to the log
-                            Toast.makeText(TasksActivity.this,"+++",Toast.LENGTH_LONG).show();
-                            results.setText(e.getMessage());
+                            //Toast.makeText(TasksActivity.this,"+++",Toast.LENGTH_LONG).show();
+                            //results.setText(e.getMessage());
                         }
                     }
                 },
@@ -304,5 +397,8 @@ public class TasksActivity extends AppCompatActivity {
         // Adds the JSON object request "obreq" to the request queue
         requestQueue.add(obreq);
     }
+
+
+
 }
 
