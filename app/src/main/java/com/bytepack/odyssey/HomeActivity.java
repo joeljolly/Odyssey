@@ -56,8 +56,8 @@ public class HomeActivity extends AppCompatActivity {
     FusedLocationProviderClient mFusedLocationProviderClient;
     PlaceDetectionClient p1;
     LatLng L;
-    GridLayout G1,G2,G3;
-    RelativeLayout G4;
+    GridLayout G2;
+    RelativeLayout G4,G1;
     private String mUsername;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseUser mFirebaseUser;
@@ -107,7 +107,7 @@ public class HomeActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        G1=(GridLayout) findViewById(R.id.layout1);
+        G1=(RelativeLayout) findViewById(R.id.layout1);
         G2=(GridLayout) findViewById(R.id.layout2);
         G4=(RelativeLayout) findViewById(R.id.layout4);
 
@@ -228,16 +228,11 @@ public class HomeActivity extends AppCompatActivity {
                             try {
 
                                 myList = myLocation.getFromLocation(mLastKnownLocation.getLatitude(),mLastKnownLocation.getLongitude(),1);
-
+                                TextView t1=(TextView)findViewById(R.id.Textview);
                                 Address address = (Address) myList.get(0);
                                 // sending back first address line and locality
-                                //t1.setText(address.getLocality());
-                                Intent intent1=new Intent(HomeActivity.this,MapsActivity.class);
-                                intent1.putExtra("Slat",mLastKnownLocation.getLatitude());
-                                intent1.putExtra("Slng",mLastKnownLocation.getLongitude());
-                                intent1.putExtra("Dlat",8.7707);
-                                intent1.putExtra("Dlng",76.8836);
-                                //startActivity(intent1);
+                                t1.setText(address.getLocality());
+
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -254,6 +249,16 @@ public class HomeActivity extends AppCompatActivity {
         } catch(SecurityException e)  {
             Log.e("Exception: %s", e.getMessage());
         }
+    }
+    public void findtask(View v)
+    {
+        Intent intent1=new Intent(HomeActivity.this,MapsActivity.class);
+        intent1.putExtra("Slat",mLastKnownLocation.getLatitude());
+        intent1.putExtra("Slng",mLastKnownLocation.getLongitude());
+        intent1.putExtra("Dlat",8.7707);
+        intent1.putExtra("Dlng",76.8836);
+        //startActivity(intent1);
+        Toast.makeText(this,"intended",Toast.LENGTH_LONG).show();
     }
 
     public void user_tasks()
