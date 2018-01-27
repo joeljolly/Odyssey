@@ -20,6 +20,7 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.places.GeoDataClient;
@@ -85,10 +86,11 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_notifications2:
                     user_profile();
+                    display_profile();
                     G1.setVisibility(View.GONE);
                     G2.setVisibility(View.GONE);
                     G4.setVisibility(View.VISIBLE);
-                    display_profile();
+
                     return true;
             }
             return false;
@@ -108,6 +110,9 @@ public class HomeActivity extends AppCompatActivity {
         G1=(GridLayout) findViewById(R.id.layout1);
         G2=(GridLayout) findViewById(R.id.layout2);
         G4=(RelativeLayout) findViewById(R.id.layout4);
+
+        user_profile();
+        display_profile();
 
     }
 
@@ -156,19 +161,21 @@ public class HomeActivity extends AppCompatActivity {
 
         // Construct a FusedLocationProviderClient.
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        user_tasks();
+
     }
-    public Boolean mLocationPermissionGranted;
+    public Boolean mLocationPermissionGranted=true;
     private void getLocationPermission() {
     /*
      * Request location permission, so that we can get the location of the
      * device. The result of the permission request is handled by a callback,
      * onRequestPermissionsResult.
      */
+        Log.d("inside","gLp");
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             mLocationPermissionGranted = true;
+            getCurrentLocation();
         } else {
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},1);
@@ -184,33 +191,44 @@ public class HomeActivity extends AppCompatActivity {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d("exit","gcl");
                     mLocationPermissionGranted = true;
+
                 }
             }
         }
 
     }
     Geocoder myLocation;
+    Location mLastKnownLocation;
     List myList;
-    public void user_tasks()
+    public void getCurrentLocation()
+
     {
         //final TextView t1=(TextView) findViewById(R.id.textView1);
-        myLocation = new Geocoder(this,Locale.getDefault());
+        Log.d("inside","gcl");
         //myList = myLocation.getFromLocation(latPoint,lngPoint,1);
         try {
-            getLocationPermission();
+
             if (mLocationPermissionGranted) {
                 Task locationResult = mFusedLocationProviderClient.getLastLocation();
+                myLocation = new Geocoder(this,Locale.getDefault());
+                Log.d("Test","11");
                 locationResult.addOnCompleteListener(this, new OnCompleteListener() {
                     @Override
                     public void onComplete(@NonNull Task task) {
+
                         if (task.isSuccessful()) {
                             // Set the map's camera position to the current location of the device.
-                            Location mLastKnownLocation =(Location) task.getResult();
-                            L=new LatLng(mLastKnownLocation.getLatitude(),mLastKnownLocation.getLongitude());
+                            Log.d("Test","222");
+                            mLastKnownLocation =(Location) task.getResult();
 
+                            L=new LatLng(mLastKnownLocation.getLatitude(),mLastKnownLocation.getLongitude());
+                            Toast.makeText(HomeActivity.this,L.latitude+" "+L.longitude,Toast.LENGTH_LONG).show();
                             try {
+
                                 myList = myLocation.getFromLocation(mLastKnownLocation.getLatitude(),mLastKnownLocation.getLongitude(),1);
+
                                 Address address = (Address) myList.get(0);
                                 // sending back first address line and locality
                                 //t1.setText(address.getLocality());
@@ -224,19 +242,24 @@ public class HomeActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
 
+
                         } else {
-                          //  Log.d(TAG, "Current location is null. Using defaults.");
+                            //  Log.d(TAG, "Current location is null. Using defaults.");
                             //Log.e(TAG, "Exception: %s", task.getException());
                         }
                     }
+
                 });
             }
         } catch(SecurityException e)  {
             Log.e("Exception: %s", e.getMessage());
         }
+    }
 
-
-
+    public void user_tasks()
+    {
+        Log.d("inside","u_t");
+        getLocationPermission();
     }
 
 }
