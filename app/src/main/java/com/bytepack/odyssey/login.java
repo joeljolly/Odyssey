@@ -9,6 +9,8 @@ import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,14 +37,19 @@ public class login extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
 
         if (requestCode == RC_SIGN_IN) {
             IdpResponse response = IdpResponse.fromResultIntent(data);
 
             if (resultCode == RESULT_OK) {
-                // Successfully signed in
+                // Successfully signed in'
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 Toast.makeText(login.this,"Success",Toast.LENGTH_LONG).show();
+                String email=user.getEmail();
+               // DatabaseReference myRef = database.getReference("root/users/"+email+"");
+               // myRef.setValue("null");
                 startActivity(new Intent(login.this,HomeActivity.class));
 
                 // ...

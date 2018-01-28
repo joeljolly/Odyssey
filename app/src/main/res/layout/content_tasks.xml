@@ -22,6 +22,7 @@
             android:visibility="visible">
             <!-- content goes here -->
             <LinearLayout
+                android:id="@+id/v1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
@@ -43,9 +44,11 @@
                     android:text="Title" />
 
                 <Button
+                    android:id="@+id/b1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Start" />
+                    android:onClick="taskGo1"
+                    android:text="Go" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
@@ -55,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin='16dp'
-            android:visibility="gone">
+            android:visibility="visible">
             <!-- content goes here -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -80,7 +83,8 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Start" />
+                    android:onClick="taskGo2"
+                    android:text="Go" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
@@ -99,8 +103,8 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="140dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/common_google_signin_btn_icon_light_focused"/>
+                    android:scaleType="centerCrop" />
+
 
                 <TextView
                     android:id="@+id/text3"
@@ -115,6 +119,7 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="taskGo3"
                     android:text="Go" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
@@ -124,7 +129,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin='16dp'
-            android:visibility="gone">
+            android:visibility="visible">
             <!-- content goes here -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -149,7 +154,8 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Start" />
+                    android:onClick="taskGo4"
+                    android:text="Go" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
@@ -158,7 +164,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin='16dp'
-            android:visibility="gone">
+            android:visibility="visible">
             <!-- content goes here -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -183,7 +189,8 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Start" />
+                    android:onClick="taskGo5"
+                    android:text="Go" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
@@ -192,7 +199,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin='16dp'
-            android:visibility="gone">
+            android:visibility="visible">
             <!-- content goes here -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -217,7 +224,8 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Start" />
+                    android:onClick="taskGo6"
+                    android:text="Go" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
@@ -226,7 +234,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin='16dp'
-            android:visibility="gone">
+            android:visibility="visible">
             <!-- content goes here -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -252,7 +260,8 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Start" />
+                    android:onClick="taskGo7"
+                    android:text="Go" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
@@ -261,7 +270,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin='16dp'
-            android:visibility="gone">
+            android:visibility="visible">
             <!-- content goes here -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -286,7 +295,8 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Start" />
+                    android:onClick="taskGo8"
+                    android:text="Go" />
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
