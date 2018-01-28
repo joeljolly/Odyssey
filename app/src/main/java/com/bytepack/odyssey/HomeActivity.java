@@ -253,13 +253,50 @@ public class HomeActivity extends AppCompatActivity {
     }
     public void findtask(View v)
     {
-        Intent intent1=new Intent(HomeActivity.this,TasksActivity.class);
-        intent1.putExtra("Slat", mLastKnownLocation.getLatitude());
-        intent1.putExtra("Slng",mLastKnownLocation.getLongitude());
-        intent1.putExtra("Dlat",8.7707);
-        intent1.putExtra("Dlng",76.8836);
-        startActivity(intent1);
-        Toast.makeText(this,"intended",Toast.LENGTH_LONG).show();
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mFirebaseUser = mFirebaseAuth.getCurrentUser();
+        mUsername=mFirebaseUser.getUid();
+
+        DatabaseReference mDatabase;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("root/users/"+mUsername+"/activeTask");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                String value = dataSnapshot.getValue(String.class);
+                //Toast.makeText(TasksActivity.this,value,Toast.LENGTH_LONG).show();
+                if(value!="null") {
+                    String Result[] = new String[100];
+                    Result=value.split(",");
+                    Intent i =new Intent(HomeActivity.this,MapsActivity.class);
+                    i.putExtra("name",Result[0]);
+                    i.putExtra("lat", Result[1]);
+                    i.putExtra("lng",Result[2]);
+                    startActivity(i);
+
+                }
+                else {
+                    Intent intent1=new Intent(HomeActivity.this,TasksActivity.class);
+                    intent1.putExtra("Slat",mLastKnownLocation.getLatitude());
+                    intent1.putExtra("Slng",mLastKnownLocation.getLongitude());
+                    intent1.putExtra("Dlat",8.7707);
+                    intent1.putExtra("Dlng",76.8836);
+                    startActivity(intent1);
+                    //Toast.makeText(HomeActivity.this,"intended",Toast.LENGTH_LONG).show();
+                }
+                //Log.d(TAG, "Value is: " + value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                //Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
     }
 
     public void user_tasks()
