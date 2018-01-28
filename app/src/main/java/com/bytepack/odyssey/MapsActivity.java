@@ -1,65 +1,59 @@
 package com.bytepack.odyssey;
 
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.List;
-import java.util.Locale;
 
-import android.graphics.Color;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
-
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.Circle;
-import com.google.android.gms.maps.model.CircleOptions;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
-
-
-import android.widget.TextView;
-import android.widget.Toast;
-
+import java.net.URL;
 import java.util.List;
 import java.util.Locale;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
     private Boolean mLocationPermissionGranted = false;
-    private GoogleMap mMap;
+    public GoogleMap mMap;
     private TextView mTapTextView;
     private Location mLocation;
     private  com.bytepack.odyssey.GPSTracker gpsTracker;
+    private static final String TAG = MapsActivity.class.getSimpleName();
     double latitude, longitude;
     double lat, lng;
-
+    ImageView imgProfilePic;
+    GoogleSignInAccount acct;
+    String personPhotoUrl;
+    Bitmap bm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         try {
-
+            acct = GoogleSignIn.getLastSignedInAccount(this);
+            personPhotoUrl = acct.getPhotoUrl().toString();
             gpsTracker = new com.bytepack.odyssey.GPSTracker(getApplicationContext());
             mLocation = gpsTracker.getLocation();
 
@@ -75,6 +69,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             System.out.println("60");
             lat = gpsTracker.getLocation().getLatitude();
             lng = gpsTracker.getLocation().getLongitude();
+
+
 
         } catch (Exception e) {
             Toast.makeText(MapsActivity.this,"GPS not enabled!",Toast.LENGTH_LONG);
@@ -104,20 +100,38 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        try {
+            // Customise the styling of the base map using a JSON object defined
+            // in a raw resource file.
+            boolean success = googleMap.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(
+                            this, R.raw.style_json));
+
+            if (!success) {
+                Log.e(TAG, "Style parsing failed.");
+            }
+        } catch (Resources.NotFoundException e) {
+            Log.e(TAG, "Can't find style. Error: ", e);
+        }
         mMap = googleMap;
         mMap.setOnMapClickListener(this);
         System.out.println("118");
         Bundle b= getIntent().getExtras();
-        double Slat =b.getDouble("Slat");
-        double Slng =b.getDouble("Slng");
-        double Dlat =b.getDouble("Dlat");
-        double Dlng =b.getDouble("Dlng");
-        CircleOptions circleoptions = new CircleOptions().strokeWidth(2).strokeColor(Color.BLUE).fillColor(Color.parseColor("#500084d3"));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(Slat,Slng)).title("Sthalam1"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(Slat,Slng)));
-        Circle circle = mMap.addCircle(circleoptions.center(new LatLng(Slat,Slng)).radius(5000.0));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(circleoptions.getCenter(), getZoomLevel(circle)));
-        mMap.addMarker(new MarkerOptions().position(new LatLng(Dlat,Dlng)).title("Sthalam2"));
+       //double Slat =b.getDouble("Slat");
+        //double Slng =b.getDouble("Slng");
+        double Dlat =b.getDouble("lat");
+        double Dlng =b.getDouble("lng");
+        String place =b.getString("name");
+        //CircleOptions circleoptions = new CircleOptions().strokeWidth(2).strokeColor(Color.BLUE).fillColor(Color.parseColor("#500084d3"));
+        //mMap.addMarker(new MarkerOptions().position(new LatLng(Slat,Slng)).title("Sthalam1"));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(Slat,Slng)));
+        //Circle circle = mMap.addCircle(circleoptions.center(new LatLng(Slat,Slng)).radius(5000.0));
+        //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(circleoptions.getCenter(), getZoomLevel(circle)));
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(Dlat,Dlng))
+                .title(place)
+                .snippet("Population: 4,627,300")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.flag)));
     }
     public String getAddress(LatLng point)
     {
@@ -142,18 +156,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
     @Override
     public void onMapClick(LatLng point) {
-/*        mMap.clear();
+     mMap.clear();
         System.out.println("125");
         CircleOptions circleoptions = new CircleOptions().strokeWidth(2).strokeColor(Color.BLUE).fillColor(Color.parseColor("#500084d3"));
         try {
+           // String st = acct.getPhotoUrl().toString();
+            //URL url=new URL(st);
+           // Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+          //  MarkerOptions mo= new MarkerOptions()
+           //         .icon(BitmapDescriptorFactory.fromBitmap(bmp));
+          //  mMap.addMarker(mo.position(new LatLng(8,76)).title("HII"));
 
             com.bytepack.odyssey.GPSTracker gpsTracker = new com.bytepack.odyssey.GPSTracker(getApplicationContext());
             mLocation = gpsTracker.getLocation();
 
             latitude = mLocation.getLatitude();
             longitude = mLocation.getLongitude();
-          *//*  Geocoder geocoder = new Geocoder(this);
-            geocoder.get*//*
+          /*  Geocoder geocoder = new Geocoder(this);
+            geocoder.get*/
             // Obtain the SupportMapFragment and get notified when the map is ready to be used.
             SupportMapFragment
                     mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -162,9 +182,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             lat = gpsTracker.getLocation().getLatitude();
             lng = gpsTracker.getLocation().getLongitude();
             LatLng currloc = new LatLng(lat, lng);
-           // mMap.addMarker(new MarkerOptions().position(currloc).title(getAddress(currloc)));
+             mMap.addMarker(new MarkerOptions()
+                    .position(currloc)
+                    .title(getAddress(currloc))
+                    .snippet("Population: 4,627,300")
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.user)));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(currloc));
-            Circle circle = mMap.addCircle(circleoptions.center(currloc).radius(5000.0));
+            Circle circle = mMap.addCircle(circleoptions.center(currloc).radius(50));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(circleoptions.getCenter(), getZoomLevel(circle)));
            //final TextView textViewToChange = (TextView) findViewById(R.id.cord);
             //textViewToChange.setText("Latittude:"+point.latitude+"\nLongitude"+point.longitude);
@@ -173,7 +197,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             //toast
 
         }
-        System.out.println("153")*/;
+        System.out.println("153");
     }
 
     // Keys for storing activity state.

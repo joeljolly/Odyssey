@@ -219,6 +219,7 @@ public class HomeActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task task) {
 
                         if (task.isSuccessful()) {
+                            Log.d("TAG", "Current location is null. Using defaults.");
                             // Set the map's camera position to the current location of the device.
                             Log.d("Test","222");
                             mLastKnownLocation =(Location) task.getResult();
@@ -237,15 +238,15 @@ public class HomeActivity extends AppCompatActivity {
                                 intent1.putExtra("Slng",mLastKnownLocation.getLongitude());
                                 intent1.putExtra("Dlat",8.7707);
                                 intent1.putExtra("Dlng",76.8836);
-                                //startActivity(intent1);
+                                startActivity(intent1);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
 
 
                         } else {
-                            //  Log.d(TAG, "Current location is null. Using defaults.");
-                            //Log.e(TAG, "Exception: %s", task.getException());
+                            //  Log.d("TAG", "Current location is null. Using defaults.");
+                            Log.e("TAG", "Exception: %s", task.getException());
                         }
                     }
 
