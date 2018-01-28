@@ -80,12 +80,19 @@ public class TasksActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
-
+        Bundle b= getIntent().getExtras();
+        Double Lat=b.getDouble("Slat");
+        Double Lng=b.getDouble("Slng");
+        //Lat=Float.parseFloat(Dlat);
+        //Lng=Float.parseFloat(Dlng);
+        Toast.makeText(TasksActivity.this,""+Lat+" "+Lng,Toast.LENGTH_LONG).show();
+    try {
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
-        mUsername=mFirebaseUser.getEmail();
-
+        mUsername = mFirebaseUser.getEmail();
+    }
+    catch(Exception e)
+    {}
 
         //////
 
@@ -503,12 +510,18 @@ public class TasksActivity extends AppCompatActivity {
     DatabaseReference myRef = database.getReference("root/users/"+mUsername+"/activeTask");
 
     public void taskGo1(View v) {
-        DatabaseReference mDatabase;
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("root").child("users").child(mUsername).child("activeTask").setValue(Target[1]);
-
+        try {
+            DatabaseReference mDatabase;
+            mDatabase = FirebaseDatabase.getInstance().getReference();
+            mDatabase.child("root").child("users").child(mUsername).child("activeTask").setValue(Target[1]);
+            myRef.setValue(Target[1]);
+        }
+        catch (Exception e)
+        {
+            Log.e("Exception :","Not Working");
+        }
         String Res[]=new String[100];
-        myRef.setValue(Target[1]);
+        //myRef.setValue(Target[1]);
         Res=Target[1].split(",");
 
         //Toast.makeText(TasksActivity.this,Res[1],Toast.LENGTH_LONG).show();

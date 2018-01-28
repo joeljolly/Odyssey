@@ -39,11 +39,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.firebase.database.ValueEventListener;
 
 import java.net.URL;
 
@@ -253,7 +256,7 @@ public class HomeActivity extends AppCompatActivity {
     }
     public void findtask(View v)
     {
-        mFirebaseAuth = FirebaseAuth.getInstance();
+       /* mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
         mUsername=mFirebaseUser.getUid();
 
@@ -268,15 +271,19 @@ public class HomeActivity extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 String value = dataSnapshot.getValue(String.class);
-                //Toast.makeText(TasksActivity.this,value,Toast.LENGTH_LONG).show();
+                Toast.makeText(HomeActivity.this,value,Toast.LENGTH_LONG).show();
                 if(value!="null") {
                     String Result[] = new String[100];
-                    Result=value.split(",");
-                    Intent i =new Intent(HomeActivity.this,MapsActivity.class);
-                    i.putExtra("name",Result[0]);
-                    i.putExtra("lat", Result[1]);
-                    i.putExtra("lng",Result[2]);
-                    startActivity(i);
+                    Result = value.split(",");
+                    try {
+                        Intent i = new Intent(HomeActivity.this, MapsActivity.class);
+                        i.putExtra("name", Result[0]);
+                        i.putExtra("lat", Result[1]);
+                        i.putExtra("lng", Result[2]);
+                        startActivity(i);
+                    } catch (Exception e)
+                {}
+
 
                 }
                 else {
@@ -296,7 +303,13 @@ public class HomeActivity extends AppCompatActivity {
                 // Failed to read value
                 //Log.w(TAG, "Failed to read value.", error.toException());
             }
-        });
+        });*/
+        Intent intent1=new Intent(HomeActivity.this,TasksActivity.class);
+        intent1.putExtra("Slat",mLastKnownLocation.getLatitude());
+        intent1.putExtra("Slng",mLastKnownLocation.getLongitude());
+        intent1.putExtra("Dlat",8.7707);
+        intent1.putExtra("Dlng",76.8836);
+        startActivity(intent1);
     }
 
     public void user_tasks()
