@@ -48,7 +48,7 @@ public class login extends AppCompatActivity {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 Toast.makeText(login.this,"Success",Toast.LENGTH_LONG).show();
                 String email=user.getEmail();
-               // DatabaseReference myRef = database.getReference("root/users/"+email+"");
+                DatabaseReference myRef = database.getReference("root/users/"+email+"");
                // myRef.setValue("null");
                 startActivity(new Intent(login.this,HomeActivity.class));
 
