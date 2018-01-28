@@ -117,11 +117,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMapClickListener(this);
         System.out.println("118");
         Bundle b= getIntent().getExtras();
-       //double Slat =b.getDouble("Slat");
-        //double Slng =b.getDouble("Slng");
-        double Dlat =b.getDouble("lat");
-        double Dlng =b.getDouble("lng");
+        double Dlat;
+        double Dlng;
+        String aDlat =b.getString("lat");
+        String aDlng =b.getString("lng");
         String place =b.getString("name");
+        Dlat=Double.parseDouble(aDlat);
+        Dlng=Double.parseDouble(aDlng);
+        Toast.makeText(MapsActivity.this,""+aDlat+" "+aDlng+"",Toast.LENGTH_LONG).show();
+        Geocoder geocoder;
+        List<Address> addresses;
+        geocoder = new Geocoder(this, Locale.getDefault());
+        try {
+            addresses = geocoder.getFromLocationName(place, 1);
+          //  Dlat = addresses.get(0).getLatitude();
+           // Dlng = addresses.get(0).getLongitude();
+        }
+        catch (Exception e)
+        {}
         //CircleOptions circleoptions = new CircleOptions().strokeWidth(2).strokeColor(Color.BLUE).fillColor(Color.parseColor("#500084d3"));
         //mMap.addMarker(new MarkerOptions().position(new LatLng(Slat,Slng)).title("Sthalam1"));
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(Slat,Slng)));
@@ -129,8 +142,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(circleoptions.getCenter(), getZoomLevel(circle)));
         mMap.addMarker(new MarkerOptions()
                 .position(new LatLng(Dlat,Dlng))
-                .title(place)
-                .snippet("Population: 4,627,300")
+                        .title(place)
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.flag)));
     }
     public String getAddress(LatLng point)

@@ -508,7 +508,7 @@ public class TasksActivity extends AppCompatActivity {
         //Toast.makeText(TasksActivity.this,Res[2],Toast.LENGTH_LONG).show();
         Intent i =new Intent(TasksActivity.this,MapsActivity.class);
         i.putExtra("name",Res[0]);
-        i.putExtra("lat",Res[1]);
+        i.putExtra("lat", Res[1]);
         i.putExtra("lng",Res[2]);
         startActivity(i);
     }
