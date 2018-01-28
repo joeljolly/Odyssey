@@ -38,7 +38,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Boolean mLocationPermissionGranted = false;
     public GoogleMap mMap;
     private TextView mTapTextView;
-    private Location mLocation;
+    private Location mLocation,Dest;
     private  com.bytepack.odyssey.GPSTracker gpsTracker;
     private static final String TAG = MapsActivity.class.getSimpleName();
     double latitude, longitude;
@@ -47,6 +47,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     GoogleSignInAccount acct;
     String personPhotoUrl;
     Bitmap bm;
+    LatLng spos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,6 +125,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String place =b.getString("name");
         Dlat=Double.parseDouble(aDlat);
         Dlng=Double.parseDouble(aDlng);
+        Dest = new Location("Dest");
+        Dest.setLatitude(Dlat);
+        Dest.setLongitude(Dlng);
         Toast.makeText(MapsActivity.this,""+aDlat+" "+aDlng+"",Toast.LENGTH_LONG).show();
         Geocoder geocoder;
         List<Address> addresses;
@@ -197,11 +201,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
              mMap.addMarker(new MarkerOptions()
                     .position(currloc)
                     .title(getAddress(currloc))
-                    .snippet("Population: 4,627,300")
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.user)));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(currloc));
             Circle circle = mMap.addCircle(circleoptions.center(currloc).radius(50));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(circleoptions.getCenter(), getZoomLevel(circle)));
+            if(mLocation.distanceTo(Dest)<=50)
+            {
+                Toast.makeText(MapsActivity.this,"Success",Toast.LENGTH_LONG).show();
+            }
+            else
+            {
+                Toast.makeText(MapsActivity.this,"Fail",Toast.LENGTH_LONG).show();
+            }
            //final TextView textViewToChange = (TextView) findViewById(R.id.cord);
             //textViewToChange.setText("Latittude:"+point.latitude+"\nLongitude"+point.longitude);
             System.out.println("149");

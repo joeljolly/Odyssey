@@ -65,6 +65,7 @@ public class TasksActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_tasks);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -77,7 +78,12 @@ public class TasksActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
+        Bundle b= getIntent().getExtras();
+        Double Lat=b.getDouble("Slat");
+        Double Lng=b.getDouble("Slng");
+        //Lat=Float.parseFloat(Dlat);
+        //Lng=Float.parseFloat(Dlng);
+        Toast.makeText(TasksActivity.this,""+Lat+" "+Lng,Toast.LENGTH_LONG).show();
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
@@ -86,8 +92,8 @@ public class TasksActivity extends AppCompatActivity {
 
         //////
 
-        Lat=8.5241;
-        Lng=76.9366;
+       // Lat=10.5276;
+        //Lng=76.2144;
 
 
         String JsonURLGallery = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+Lat+","+Lng+"&radius=5000&type=art_gallery&key=AIzaSyByF7l6SrHHP3mSPVkxxuxRrAyKdm4TB5Q";
