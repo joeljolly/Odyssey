@@ -22,8 +22,11 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -65,6 +68,9 @@ public class TasksActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
         setContentView(R.layout.activity_tasks);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -79,9 +85,10 @@ public class TasksActivity extends AppCompatActivity {
         });
 
 
-        mFirebaseAuth = FirebaseAuth.getInstance();
-        mFirebaseUser = mFirebaseAuth.getCurrentUser();
-        mUsername=mFirebaseUser.getEmail();
+
+
+
+
 
 
         //////
@@ -496,12 +503,14 @@ public class TasksActivity extends AppCompatActivity {
 
 
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("root/users/"+mUsername+"/activeTask");
 
     public void taskGo1(View v) {
+        DatabaseReference mDatabase;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("root").child("users").child(mUsername).child("activeTask").setValue(Target[1]);
+
         String Res[]=new String[100];
-        myRef.setValue(Target[1]);
+        //Toast.makeText(TasksActivity.this,"11",Toast.LENGTH_LONG).show();
         Res=Target[1].split(",");
 
         //Toast.makeText(TasksActivity.this,Res[1],Toast.LENGTH_LONG).show();
@@ -514,6 +523,10 @@ public class TasksActivity extends AppCompatActivity {
     }
 
     public void taskGo2(View v) {
+        DatabaseReference mDatabase;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("root").child("users").child(mUsername).child("activeTask").setValue(Target[1]);
+
         String Res[]=new String[100];
         Res=Target[2].split(",");
 
@@ -527,6 +540,10 @@ public class TasksActivity extends AppCompatActivity {
     }
 
     public void taskGo3(View v) {
+        DatabaseReference mDatabase;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("root").child("users").child(mUsername).child("activeTask").setValue(Target[1]);
+
         String Res[]=new String[100];
         Res=Target[3].split(",");
 
@@ -540,6 +557,10 @@ public class TasksActivity extends AppCompatActivity {
     }
 
     public void taskGo4(View v) {
+        DatabaseReference mDatabase;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("root").child("users").child(mUsername).child("activeTask").setValue(Target[1]);
+
         String Res[]=new String[100];
         Res=Target[4].split(",");
 
@@ -553,6 +574,10 @@ public class TasksActivity extends AppCompatActivity {
     }
 
     public void taskGo5(View v) {
+        DatabaseReference mDatabase;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("root").child("users").child(mUsername).child("activeTask").setValue(Target[1]);
+
         String Res[]=new String[100];
         Res=Target[5].split(",");
 
@@ -566,6 +591,10 @@ public class TasksActivity extends AppCompatActivity {
     }
 
     public void taskGo6(View v) {
+        DatabaseReference mDatabase;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("root").child("users").child(mUsername).child("activeTask").setValue(Target[1]);
+
         String Res[]=new String[100];
         Res=Target[6].split(",");
 
@@ -579,6 +608,10 @@ public class TasksActivity extends AppCompatActivity {
     }
 
     public void taskGo7(View v) {
+        DatabaseReference mDatabase;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("root").child("users").child(mUsername).child("activeTask").setValue(Target[1]);
+
         String Res[]=new String[100];
         Res=Target[7].split(",");
 
@@ -592,6 +625,10 @@ public class TasksActivity extends AppCompatActivity {
     }
 
     public void taskGo8(View v) {
+        DatabaseReference mDatabase;
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("root").child("users").child(mUsername).child("activeTask").setValue(Target[1]);
+
         String Res[]=new String[100];
         Res=Target[8].split(",");
 

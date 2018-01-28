@@ -33,7 +33,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="35dp"
             android:onClick="findtask"
-            android:text="FindTask" />
+            android:text="Tasks" />
     </RelativeLayout>
 
     <GridLayout
@@ -57,7 +57,8 @@
         android:layout_height="match_parent"
         android:visibility="visible"
         tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="35dp">
+        tools:layout_editor_absoluteY="35dp"
+        tools:ignore="MissingConstraints">
 
         <LinearLayout
 
