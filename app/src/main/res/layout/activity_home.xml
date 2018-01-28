@@ -8,13 +8,33 @@
     tools:context="com.bytepack.odyssey.HomeActivity">
 
 
-    <GridLayout
+    <RelativeLayout
         android:id="@+id/layout1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone">
 
-    </GridLayout>
+        <TextView
+            android:id="@+id/Textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="131dp"
+            android:text="TextView1"
+            android:textSize="35sp"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Textview"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="35dp"
+            android:onClick="findtask"
+            android:text="FindTask" />
+    </RelativeLayout>
 
     <GridLayout
         android:id="@+id/layout2"
@@ -30,14 +50,14 @@
     </GridLayout>
 
 
-
-
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/layout4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="visible"
+        tools:layout_editor_absoluteX="40dp"
+        tools:layout_editor_absoluteY="35dp">
 
         <LinearLayout
 
@@ -49,7 +69,6 @@
                 android:id="@+id/img_view"
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
-
 
 
             <LinearLayout
@@ -65,14 +84,12 @@
                     android:orientation="horizontal">
 
 
-
                     <TextView
                         android:id="@+id/textviewname"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight=".3"
-                        android:gravity="center"
-                        />
+                        android:gravity="center" />
 
 
                 </LinearLayout>
@@ -87,8 +104,7 @@
                         android:id="@+id/textViewMail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                         />
+                        android:layout_marginTop="20dp" />
 
                     <TextView
 
