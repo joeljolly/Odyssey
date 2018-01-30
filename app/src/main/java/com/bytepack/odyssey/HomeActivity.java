@@ -59,7 +59,7 @@ public class HomeActivity extends AppCompatActivity {
     FusedLocationProviderClient mFusedLocationProviderClient;
     PlaceDetectionClient p1;
     LatLng L;
-    GridLayout G2;
+    RelativeLayout G2;
     RelativeLayout G4,G1;
     private String mUsername;
     private FirebaseAuth mFirebaseAuth;
@@ -111,7 +111,7 @@ public class HomeActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         G1=(RelativeLayout) findViewById(R.id.layout1);
-        G2=(GridLayout) findViewById(R.id.layout2);
+        G2=(RelativeLayout) findViewById(R.id.layout2);
         G4=(RelativeLayout) findViewById(R.id.layout4);
 
         user_profile();
@@ -232,7 +232,7 @@ public class HomeActivity extends AppCompatActivity {
                             try {
 
                                 myList = myLocation.getFromLocation(mLastKnownLocation.getLatitude(),mLastKnownLocation.getLongitude(),1);
-                                TextView t1=(TextView)findViewById(R.id.Textview);
+                                TextView t1=(TextView)findViewById(R.id.textviewname);
                                 Address address = (Address) myList.get(0);
                                 // sending back first address line and locality
                                 t1.setText(address.getLocality());
@@ -256,7 +256,7 @@ public class HomeActivity extends AppCompatActivity {
     }
     public void findtask(View v)
     {
-       /* mFirebaseAuth = FirebaseAuth.getInstance();
+       mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
         mUsername=mFirebaseUser.getUid();
 
@@ -271,8 +271,8 @@ public class HomeActivity extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 String value = dataSnapshot.getValue(String.class);
-                Toast.makeText(HomeActivity.this,value,Toast.LENGTH_LONG).show();
-                if(value!="null") {
+                //Toast.makeText(HomeActivity.this,value,Toast.LENGTH_LONG).show();
+                if(!value.equals("null")) {
                     String Result[] = new String[100];
                     Result = value.split(",");
                     try {
@@ -287,6 +287,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 }
                 else {
+                    Toast.makeText(HomeActivity.this,value,Toast.LENGTH_LONG).show();
                     Intent intent1=new Intent(HomeActivity.this,TasksActivity.class);
                     intent1.putExtra("Slat",mLastKnownLocation.getLatitude());
                     intent1.putExtra("Slng",mLastKnownLocation.getLongitude());
@@ -303,19 +304,24 @@ public class HomeActivity extends AppCompatActivity {
                 // Failed to read value
                 //Log.w(TAG, "Failed to read value.", error.toException());
             }
-        });*/
-        Intent intent1=new Intent(HomeActivity.this,TasksActivity.class);
+        });
+        /*Intent intent1=new Intent(HomeActivity.this,TasksActivity.class);
         intent1.putExtra("Slat",mLastKnownLocation.getLatitude());
         intent1.putExtra("Slng",mLastKnownLocation.getLongitude());
         intent1.putExtra("Dlat",8.7707);
         intent1.putExtra("Dlng",76.8836);
-        startActivity(intent1);
+        startActivity(intent1);*/
     }
 
     public void user_tasks()
     {
         Log.d("inside","u_t");
         getLocationPermission();
+    }
+
+    public void frewards(View v)
+    {
+        Toast.makeText(HomeActivity.this,"Not enough points",Toast.LENGTH_LONG).show();
     }
 
 }

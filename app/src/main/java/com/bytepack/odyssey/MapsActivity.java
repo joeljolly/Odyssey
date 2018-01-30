@@ -1,5 +1,6 @@
 package com.bytepack.odyssey;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -28,6 +29,13 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 import java.net.URL;
@@ -48,6 +56,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     String personPhotoUrl;
     Bitmap bm;
     LatLng spos;
+    String aDlat,aDlng,place;
+    private String mUsername;
+    private FirebaseAuth mFirebaseAuth;
+    private FirebaseUser mFirebaseUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +88,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } catch (Exception e) {
             Toast.makeText(MapsActivity.this,"GPS not enabled!",Toast.LENGTH_LONG);
         }
+
+        try {
+            mFirebaseAuth = FirebaseAuth.getInstance();
+            mFirebaseUser = mFirebaseAuth.getCurrentUser();
+            mUsername = mFirebaseUser.getUid();
+        }
+        catch(Exception e)
+        {}
+
     }
 
 
@@ -120,9 +141,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Bundle b= getIntent().getExtras();
         double Dlat;
         double Dlng;
-        String aDlat =b.getString("lat");
-        String aDlng =b.getString("lng");
-        String place =b.getString("name");
+        aDlat =b.getString("lat");
+        aDlng =b.getString("lng");
+        place =b.getString("name");
         Dlat=Double.parseDouble(aDlat);
         Dlng=Double.parseDouble(aDlng);
         Dest = new Location("Dest");
@@ -172,6 +193,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
     @Override
     public void onMapClick(LatLng point) {
+        String str,str1;
      mMap.clear();
         System.out.println("125");
         CircleOptions circleoptions = new CircleOptions().strokeWidth(2).strokeColor(Color.BLUE).fillColor(Color.parseColor("#500084d3"));
@@ -208,6 +230,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if(mLocation.distanceTo(Dest)<=50)
             {
                 Toast.makeText(MapsActivity.this,"Success",Toast.LENGTH_LONG).show();
+
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference("root/users/"+mUsername+"/activeTask");
+
+                try {
+
+                    DatabaseReference mDatabase;
+                    mDatabase = FirebaseDatabase.getInstance().getReference();
+                    mDatabase.child("root").child("users").child(mUsername).child("activeTask").setValue("null");
+
+                    mDatabase.child("root").child("users").child(mUsername).child("previousTask").child(place).setValue(""+aDlat+","+aDlng);
+
+
+
+                }
+                catch (Exception e)
+                {
+                    Log.e("Exception :",e.getMessage());
+                }
+
+
             }
             else
             {

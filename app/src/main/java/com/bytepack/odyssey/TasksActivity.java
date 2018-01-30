@@ -89,7 +89,7 @@ public class TasksActivity extends AppCompatActivity {
     try {
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mFirebaseAuth.getCurrentUser();
-        mUsername = mFirebaseUser.getEmail();
+        mUsername = mFirebaseUser.getUid();
     }
     catch(Exception e)
     {}
@@ -518,7 +518,7 @@ public class TasksActivity extends AppCompatActivity {
         }
         catch (Exception e)
         {
-            Log.e("Exception :","Not Working");
+            Log.e("Exception :",e.getMessage());
         }
         String Res[]=new String[100];
         //myRef.setValue(Target[1]);
